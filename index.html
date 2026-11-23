@@ -5,6 +5,33 @@
     <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Skyra Weather</title>
+    <script>
+      ;(() => {
+        const storedMode = localStorage.getItem('skyra-color-mode')
+        const mode =
+          storedMode === 'light' || storedMode === 'dark'
+            ? storedMode
+            : window.matchMedia('(prefers-color-scheme: dark)').matches
+              ? 'dark'
+              : 'light'
+
+        document.documentElement.dataset.colorMode = mode
+        document.documentElement.style.colorScheme = mode
+      })()
+    </script>
+    <style>
+      html[data-color-mode='light'] {
+        background: #f5f9fc;
+      }
+
+      html[data-color-mode='dark'] {
+        background: #1c1b22;
+      }
+
+      body {
+        margin: 0;
+      }
+    </style>
   </head>
   <body>
     <div id="app"></div>
