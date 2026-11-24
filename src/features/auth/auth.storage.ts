@@ -6,6 +6,10 @@ export function saveUser(user: AuthUser) {
   localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(user))
 }
 
+export function clearStoredUser() {
+  localStorage.removeItem(USER_STORAGE_KEY)
+}
+
 export function getStoredUser(): AuthUser | null {
   const rawUser = localStorage.getItem(USER_STORAGE_KEY)
   if (!rawUser) return null
