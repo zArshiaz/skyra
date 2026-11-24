@@ -1,26 +1,16 @@
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-  type PropsWithChildren,
-} from 'react'
+import { useEffect, useMemo, useState, type PropsWithChildren } from 'react'
 
+import { CacheProvider } from '@emotion/react'
 import { CssBaseline, ThemeProvider as MuiThemeProvider } from '@mui/material'
 
+import { useI18n } from '../i18n/useI18n'
+import { ThemeContext } from './ThemeContext'
+import { ltrEmotionCache, rtlEmotionCache } from './emotionCache'
 import { createAppTheme } from './theme'
 import type { ColorMode } from './tokens'
+import type { ThemeContextValue } from './ThemeProvider.types'
 
 const STORAGE_KEY = 'skyra-color-mode'
-
-type ThemeContextValue = {
-  mode: ColorMode
-  setMode: (mode: ColorMode) => void
-  toggleMode: () => void
-}
-
-const ThemeContext = createContext<ThemeContextValue | null>(null)
 
 const storedMode = (): ColorMode | null => {
   const value = localStorage.getItem(STORAGE_KEY)
@@ -36,6 +26,7 @@ const initialMode = (): ColorMode => {
 
 export function AppThemeProvider({ children }: PropsWithChildren) {
   const [mode, setMode] = useState<ColorMode>(initialMode)
+  const { direction } = useI18n()
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, mode)
@@ -43,7 +34,8 @@ export function AppThemeProvider({ children }: PropsWithChildren) {
     document.documentElement.style.colorScheme = mode
   }, [mode])
 
-  const theme = useMemo(() => createAppTheme(mode), [mode])
+  const theme = useMemo(() => createAppTheme(mode, direction), [direction, mode])
+  const emotionCache = direction === 'rtl' ? rtlEmotionCache : ltrEmotionCache
   const value = useMemo<ThemeContextValue>(
     () => ({
       mode,
@@ -54,17 +46,13 @@ export function AppThemeProvider({ children }: PropsWithChildren) {
   )
 
   return (
-    <ThemeContext.Provider value={value}>
-      <MuiThemeProvider theme={theme}>
-        <CssBaseline />
-        {children}
-      </MuiThemeProvider>
-    </ThemeContext.Provider>
+    <CacheProvider value={emotionCache}>
+      <ThemeContext.Provider value={value}>
+        <MuiThemeProvider theme={theme}>
+          <CssBaseline />
+          {children}
+        </MuiThemeProvider>
+      </ThemeContext.Provider>
+    </CacheProvider>
   )
-}
-
-export function useAppTheme() {
-  const context = useContext(ThemeContext)
-  if (!context) throw new Error('useAppTheme must be used within AppThemeProvider.')
-  return context
 }

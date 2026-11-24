@@ -1,13 +1,15 @@
 import { createTheme, type PaletteMode } from '@mui/material/styles'
 
 import { palette, semanticColors, type ColorMode } from './tokens'
+import { appTypography } from './typography'
 
 const themeColors = (mode: ColorMode) => semanticColors[mode]
 
-export const createAppTheme = (mode: PaletteMode) => {
+export const createAppTheme = (mode: PaletteMode, direction: 'ltr' | 'rtl') => {
   const colors = themeColors(mode)
 
   return createTheme({
+    direction,
     palette: {
       mode,
       primary: colors.primary,
@@ -41,10 +43,7 @@ export const createAppTheme = (mode: PaletteMode) => {
       },
     },
     shape: { borderRadius: 12 },
-    typography: {
-      fontFamily: 'Inter, Vazirmatn, system-ui, sans-serif',
-      button: { fontWeight: 700, textTransform: 'none' },
-    },
+    typography: appTypography,
     components: {
       MuiCssBaseline: {
         styleOverrides: {
@@ -55,7 +54,43 @@ export const createAppTheme = (mode: PaletteMode) => {
         styleOverrides: { root: { backgroundImage: 'none' } },
       },
       MuiButton: {
-        styleOverrides: { root: { borderRadius: 10 } },
+        styleOverrides: {
+          root: { borderRadius: 4 },
+          sizeSmall: { minHeight: 42, padding: '8px 22px' },
+        },
+      },
+      MuiInputBase: {
+        styleOverrides: {
+          input: {
+            fontSize: 16,
+            fontWeight: 400,
+            lineHeight: '24px',
+            letterSpacing: '0.15px',
+          },
+        },
+      },
+      MuiOutlinedInput: {
+        styleOverrides: {
+          root: {
+            minHeight: 56,
+            borderRadius: 2,
+            '&:hover .MuiOutlinedInput-notchedOutline': {
+              borderColor: colors.primary.main,
+            },
+          },
+          input: { paddingInline: 16 },
+          notchedOutline: { borderColor: colors.border },
+        },
+      },
+      MuiMenuItem: {
+        styleOverrides: {
+          root: {
+            fontSize: 16,
+            fontWeight: 400,
+            lineHeight: '24px',
+            letterSpacing: '0.15px',
+          },
+        },
       },
     },
   })
