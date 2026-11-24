@@ -9,7 +9,7 @@ type WeatherForecastState = {
   isLoading: boolean
 }
 
-export function useWeatherForecast(location: string, language: WeatherLanguage) {
+export function useWeatherForecast(location: string | null, language: WeatherLanguage) {
   const [state, setState] = useState<WeatherForecastState>({
     error: null,
     forecast: null,
@@ -17,6 +17,11 @@ export function useWeatherForecast(location: string, language: WeatherLanguage) 
   })
 
   useEffect(() => {
+    if (!location) {
+      setState({ error: null, forecast: null, isLoading: false })
+      return undefined
+    }
+
     const controller = new AbortController()
 
     setState((current) => ({ ...current, error: null, isLoading: true }))

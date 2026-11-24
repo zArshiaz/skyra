@@ -1,30 +1,44 @@
-import { Box, Button, Paper, Typography } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
+
+import { Alert, Box, Container } from '@mui/material'
 
 import { useI18n } from '@/i18n/useI18n'
-import { getStoredUser } from '@/features/auth'
+import { LoadingState } from '@/shared/components/LoadingState/LoadingState'
 import { DashboardHeader } from '../../components/DashboardHeader/DashboardHeader'
+import { TodayWeatherCard } from '../../components/TodayWeatherCard/TodayWeatherCard'
+import { useWeatherForecast } from '../../hooks/useWeatherForecast'
+import type { LocationSearchResult } from '../../models/weather.model'
+import {
+  clearStoredWeatherLocation,
+  getStoredWeatherLocation,
+  saveWeatherLocation,
+} from '../../weather.storage'
 
 export function DashboardPlaceholder() {
-  const navigate = useNavigate()
-  const { t } = useI18n()
-  const user = getStoredUser()
+  const { language, t } = useI18n()
+  const [selectedLocation, setSelectedLocation] = useState<LocationSearchResult | null>(getStoredWeatherLocation)
+  const weatherLocation = selectedLocation
+    ? `${selectedLocation.coordinates.latitude},${selectedLocation.coordinates.longitude}`
+    : null
+  const { error, forecast, isLoading } = useWeatherForecast(weatherLocation, language)
+
+  const handleLocationChange = (location: LocationSearchResult | null) => {
+    setSelectedLocation(location)
+
+    if (location) saveWeatherLocation(location)
+    else clearStoredWeatherLocation()
+  }
 
   return (
     <Box sx={{ minHeight: '100vh' }}>
-      <DashboardHeader />
-      <Box component="main" sx={{ display: 'grid', minHeight: 'calc(100vh - 80px)', placeItems: 'center', p: 3 }}>
-        <Paper sx={{ p: 4, textAlign: 'center' }}>
-          <Typography variant="h5">
-            {t('dashboard.welcome').replace('{name}', user?.name ?? '')}
-          </Typography>
-          <Typography color="text.secondary" sx={{ mt: 1 }}>
-            {t('dashboard.description')}
-          </Typography>
-          <Button sx={{ mt: 3 }} variant="outlined" onClick={() => navigate('/login')}>
-            {t('dashboard.backToLogin')}
-          </Button>
-        </Paper>
+      <DashboardHeader onLocationChange={handleLocationChange} selectedLocation={selectedLocation} />
+      <Box component="main" sx={{ minHeight: 'calc(100vh - 80px)', py: 3 }}>
+        <Container maxWidth="xl">
+          {!selectedLocation ? <Alert severity="info">{t('dashboard.locationRequired')}</Alert> : null}
+          {selectedLocation && isLoading && !forecast ? <LoadingState label={t('dashboard.loadingWeather')} /> : null}
+          {selectedLocation && error ? <Alert severity="error">{t('dashboard.weatherError')}</Alert> : null}
+          {selectedLocation && forecast ? <TodayWeatherCard weather={forecast} /> : null}
+        </Container>
       </Box>
     </Box>
   )

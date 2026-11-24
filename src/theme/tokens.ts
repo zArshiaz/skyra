@@ -146,4 +146,20 @@ export const semanticColors = {
   },
 } as const
 
+/** Semantic colors for the weather dashboard cards. */
+export const weatherCardColors = {
+  light: {
+    chip: palette.neutral[300],
+    chipText: palette.primary[900],
+    surface: palette.neutral[200],
+    text: palette.primary[900],
+  },
+  dark: {
+    chip: palette.neutral[200],
+    chipText: palette.neutral[700],
+    surface: '#2B344B',
+    text: '#F3F4F7',
+  },
+} as const
+
 export type ColorMode = 'light' | 'dark'

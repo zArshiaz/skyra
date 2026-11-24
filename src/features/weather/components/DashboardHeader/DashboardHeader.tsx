@@ -1,5 +1,7 @@
-import { useEffect, useRef, useState, type MouseEvent } from 'react'
+import { useEffect, useRef, useState, type MouseEvent, type SyntheticEvent } from 'react'
 
+import Autocomplete from '@mui/material/Autocomplete'
+import CircularProgress from '@mui/material/CircularProgress'
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined'
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined'
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined'
@@ -9,15 +11,12 @@ import {
   Button,
   ButtonGroup,
   Divider,
-  FormControl,
   IconButton,
-  InputLabel,
-  MenuItem,
   Paper,
   Popover,
   type PopoverActions,
-  Select,
   Stack,
+  TextField,
   Tooltip,
   Typography,
 } from '@mui/material'
@@ -27,21 +26,32 @@ import logo from '@/assets/branding/weather-logo.png'
 import { clearStoredUser } from '@/features/auth/auth.storage'
 import { useI18n } from '@/i18n/useI18n'
 import { useAppTheme } from '@/theme/useAppTheme'
+import { useWeatherLocationSearch } from '../../hooks/useWeatherLocationSearch'
+import type { LocationSearchResult } from '../../models/weather.model'
 
-const locationSelectId = 'dashboard-location'
-const locationLabelId = `${locationSelectId}-label`
+type DashboardHeaderProps = {
+  onLocationChange: (location: LocationSearchResult | null) => void
+  selectedLocation: LocationSearchResult | null
+}
 
-export function DashboardHeader() {
+export function DashboardHeader({ onLocationChange, selectedLocation }: DashboardHeaderProps) {
   const [settingsAnchor, setSettingsAnchor] = useState<HTMLButtonElement | null>(null)
+  const [locationInput, setLocationInput] = useState(selectedLocation?.name ?? '')
+  const [locationQuery, setLocationQuery] = useState('')
   const popoverAction = useRef<PopoverActions>(null)
   const { direction, language, setLanguage, t } = useI18n()
   const { mode, setMode } = useAppTheme()
   const navigate = useNavigate()
   const isSettingsOpen = Boolean(settingsAnchor)
+  const { isLoading: isSearchingLocations, locations } = useWeatherLocationSearch(locationQuery)
 
   useEffect(() => {
     popoverAction.current?.updatePosition()
   }, [direction])
+
+  useEffect(() => {
+    setLocationInput(selectedLocation?.name ?? '')
+  }, [selectedLocation])
 
   const openSettings = (event: MouseEvent<HTMLButtonElement>) => setSettingsAnchor(event.currentTarget)
   const closeSettings = () => setSettingsAnchor(null)
@@ -50,6 +60,17 @@ export function DashboardHeader() {
     clearStoredUser()
     closeSettings()
     navigate('/login')
+  }
+
+  const handleLocationInputChange = (_event: SyntheticEvent, value: string, reason: string) => {
+    setLocationInput(value)
+    setLocationQuery(reason === 'input' ? value : '')
+  }
+
+  const handleLocationChange = (_event: SyntheticEvent, location: LocationSearchResult | null) => {
+    onLocationChange(location)
+    if (location) setLocationInput(location.name)
+    setLocationQuery('')
   }
 
   return (
@@ -97,18 +118,45 @@ export function DashboardHeader() {
       </Box>
 
       <Stack alignItems="center" direction="row" spacing={{ xs: 0.5, sm: 1.5 }} sx={{ marginInlineStart: 'auto' }}>
-        <FormControl
-          size="small"
+        <Autocomplete
+          filterOptions={(options) => options}
+          size='small'
+          getOptionLabel={(location) => location.name}
+          inputValue={locationInput}
+          loading={isSearchingLocations}
+          loadingText={t('dashboard.searchingLocations')}
+          noOptionsText={isSearchingLocations ? t('dashboard.searchingLocations') : t('dashboard.noLocationsFound')}
+          onChange={handleLocationChange}
+          onInputChange={handleLocationInputChange}
+          options={locations}
           sx={{
-            minWidth: { xs: 154, sm: 210 },
-            '& .MuiOutlinedInput-root': { minHeight: 40 },
+            width: { xs: 154, sm: 295},
+            '& .MuiOutlinedInput-root': {
+              height: 40,
+              minHeight: 40,
+              py: 0,
+            },
           }}
-        >
-          <InputLabel id={locationLabelId}>{t('dashboard.location')}</InputLabel>
-          <Select label={t('dashboard.location')} labelId={locationLabelId} value="san-francisco">
-            <MenuItem value="san-francisco">San Francisco</MenuItem>
-          </Select>
-        </FormControl>
+          value={selectedLocation}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label={t('dashboard.location')}
+              slotProps={{
+
+                input: {
+                  ...params.InputProps,
+                  endAdornment: (
+                    <>
+                      {isSearchingLocations ? <CircularProgress size={16} /> : null}
+                      {params.InputProps.endAdornment}
+                    </>
+                  ),
+                },
+              }}
+            />
+          )}
+        />
         <Tooltip title={t('dashboard.setting')}>
           <IconButton
             aria-controls={isSettingsOpen ? 'dashboard-settings' : undefined}
