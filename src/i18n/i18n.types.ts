@@ -1,6 +1,8 @@
 export type Language = 'en' | 'fa'
 
 export type TranslationKey =
+  | 'dashboard.contact'
+  | 'dashboard.copyright'
   | 'dashboard.forecastTitle'
   | 'dashboard.today'
   | 'dashboard.noForecastDays'

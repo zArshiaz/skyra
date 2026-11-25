@@ -1,5 +1,6 @@
 import { Alert, Box, Paper, Typography } from '@mui/material'
 
+import { getDateTimeFormatter } from '@/i18n/getDateTimeFormatter'
 import { useI18n } from '@/i18n/useI18n'
 import { weatherCardColors } from '@/theme/tokens'
 import { useAppTheme } from '@/theme/useAppTheme'
@@ -16,7 +17,7 @@ export function DailyForecast({ days, today }: DailyForecastProps) {
   const { mode } = useAppTheme()
   const colors = weatherCardColors[mode]
   const title = t('dashboard.forecastTitle')
-  const weekday = new Intl.DateTimeFormat(language, { weekday: language === 'fa' ? 'long' : 'short', timeZone: 'UTC' })
+  const weekday = getDateTimeFormatter(language, 'forecastWeekday')
   const temperature = new Intl.NumberFormat('en', { maximumFractionDigits: 0 })
 
   return (

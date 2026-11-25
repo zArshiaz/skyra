@@ -1,5 +1,6 @@
 import { Box, Stack, Typography } from '@mui/material'
 
+import { formatWeatherDate } from './formatWeatherDate'
 import { useI18n } from '@/i18n/useI18n'
 
 type LocalizedWeatherDateProps = {
@@ -8,18 +9,7 @@ type LocalizedWeatherDateProps = {
 
 export function LocalizedWeatherDate({ date }: LocalizedWeatherDateProps) {
   const { language } = useI18n()
-  const persian = language === 'fa'
-  const locale = persian ? 'fa-IR-u-ca-persian-nu-latn' : 'en-US'
-  // WeatherAPI supplies the city's wall-clock time, sometimes with a single-digit hour.
-  const isoLocal = date.replace(' ', 'T').replace(/T(\d):/, 'T0$1:')
-  const hasOffset = /(?:Z|[+-]\d{2}:?\d{2})$/i.test(isoLocal)
-  const value = new Date(hasOffset ? isoLocal : isoLocal + 'Z')
-  const format = (options: Intl.DateTimeFormatOptions) =>
-    new Intl.DateTimeFormat(locale, { ...options, timeZone: 'UTC' }).format(value)
-
-  const weekday = format({ weekday: 'long' })
-  const calendarDate = format({ day: 'numeric', month: 'short', year: 'numeric' })
-  const time = format({ hour: '2-digit', minute: '2-digit', hour12: true })
+  const { dateTime, weekday, details } = formatWeatherDate(date, language)
 
   return (
     <Stack spacing={0.5} sx={{ minHeight: 58 }}>
@@ -28,11 +18,12 @@ export function LocalizedWeatherDate({ date }: LocalizedWeatherDateProps) {
       </Typography>
       <Box
         component="time"
-        dateTime={isoLocal}
+        dateTime={dateTime}
         sx={{ display: 'flex', flexWrap: 'wrap', columnGap: 2, fontSize: 14, color: 'inherit' }}
       >
-        <span>{persian ? time : calendarDate}</span>
-        <span>{persian ? calendarDate : time}</span>
+        {details.map((detail, index) => (
+          <span key={index}>{detail}</span>
+        ))}
       </Box>
     </Stack>
   )

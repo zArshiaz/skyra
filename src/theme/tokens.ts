@@ -164,4 +164,15 @@ export const weatherCardColors = {
   },
 } as const
 
+export const dashboardFooterColors = {
+  light: {
+    background: 'linear-gradient(90deg, #F3FAFE 0%, #CCDDDD 61.96%, #F3FAFE 100%)',
+    text: weatherCardColors.light.text,
+  },
+  dark: {
+    background: 'linear-gradient(90deg, #292F45, #3F4861 50%, #151D32)',
+    text: weatherCardColors.dark.text,
+  },
+} as const
+
 export type ColorMode = 'light' | 'dark'

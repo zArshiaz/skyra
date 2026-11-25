@@ -1,6 +1,8 @@
 import type { Translations } from '../i18n.types'
 
 export const en: Translations = {
+  'dashboard.copyright': 'All rights of this site are reserved for Nadin Sadr Aria Engineering Company.',
+  'dashboard.contact': 'Contact us:',
   'dashboard.forecastTitle': '2 weeks Forecast',
   'dashboard.today': 'Today',
   'dashboard.noForecastDays': 'Daily forecast data is not available.',

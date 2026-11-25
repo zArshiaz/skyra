@@ -88,6 +88,8 @@ export function DashboardHeader({ onLocationChange, selectedLocation }: Dashboar
         boxShadow: '0 3px 8px rgba(24, 43, 64, 0.10)',
         display: 'flex',
         minHeight: 56,
+        zIndex: (theme) => theme.zIndex.appBar,
+        flexShrink: 0,
         px: 3,
         py: 1.5,
       }}
@@ -193,6 +195,7 @@ export function DashboardHeader({ onLocationChange, selectedLocation }: Dashboar
       </Stack>
 
       <Popover
+        disableScrollLock
         anchorEl={settingsAnchor}
         anchorOrigin={{ horizontal: menuEdge, vertical: 'bottom' }}
         action={popoverAction}

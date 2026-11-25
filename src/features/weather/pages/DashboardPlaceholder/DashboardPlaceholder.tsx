@@ -4,6 +4,7 @@ import { Alert, Box, Container } from '@mui/material'
 
 import { useI18n } from '@/i18n/useI18n'
 import { LoadingState } from '@/shared/components/LoadingState/LoadingState'
+import { DashboardFooter } from '../../components/DashboardFooter/DashboardFooter'
 import { DashboardHeader } from '../../components/DashboardHeader/DashboardHeader'
 import { DailyForecast } from '../../components/DailyForecast/DailyForecast'
 import { MonthlyTemperatureChart } from '../../components/MonthlyTemperatureChart/MonthlyTemperatureChart'
@@ -19,7 +20,9 @@ import {
 
 export function DashboardPlaceholder() {
   const { language, t } = useI18n()
-  const [selectedLocation, setSelectedLocation] = useState<LocationSearchResult | null>(getStoredWeatherLocation)
+  const [selectedLocation, setSelectedLocation] = useState<LocationSearchResult | null>(
+    getStoredWeatherLocation,
+  )
   const weatherLocation = selectedLocation
     ? `${selectedLocation.coordinates.latitude},${selectedLocation.coordinates.longitude}`
     : null
@@ -33,34 +36,51 @@ export function DashboardPlaceholder() {
   }
 
   return (
-    <Box sx={{ minHeight: '100vh' }}>
-      <DashboardHeader onLocationChange={handleLocationChange} selectedLocation={selectedLocation} />
-      <Box component="main" sx={{ minHeight: 'calc(100vh - 80px)', py: 3 }}>
-        <Container maxWidth="xl">
-          {!selectedLocation ? <Alert severity="info">{t('dashboard.locationRequired')}</Alert> : null}
-          {selectedLocation && isLoading && !forecast ? <LoadingState label={t('dashboard.loadingWeather')} /> : null}
-          {selectedLocation && error ? <Alert severity="error">{t('dashboard.weatherError')}</Alert> : null}
-          {selectedLocation && forecast ? (
-            <Box
-              sx={{
-                display: 'grid',
-                columnGap: { xs: 3, lg: 5 },
-                rowGap: '28px',
-                gridTemplateColumns: {
-                  xs: 'minmax(0, 1fr)',
-                  md: 'minmax(0, 607fr) minmax(0, 744fr)',
-                },
-                alignItems: 'stretch',
-              }}
-            >
-              <TodayWeatherCard weather={forecast} />
-              <MonthlyTemperatureChart data={mockMonthlyTemperatures} />
-              <Box sx={{ gridColumn: '1 / -1', minWidth: 0 }}>
-                <DailyForecast days={forecast.daily} today={forecast.location.localTime.slice(0, 10)} />
-              </Box>
-            </Box>
-          ) : null}
-        </Container>
+    <Box sx={{ display: 'flex', flexDirection: 'column', height: '100dvh', overflow: 'hidden' }}>
+      <DashboardHeader
+        onLocationChange={handleLocationChange}
+        selectedLocation={selectedLocation}
+      />
+      <Box sx={{ flex: 1, minHeight: 0, overflowY: 'auto', scrollbarGutter: 'stable' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100%' }}>
+          <Box component="main" sx={{ flexGrow: 1, py: 3 }}>
+            <Container maxWidth="xl">
+              {!selectedLocation ? (
+                <Alert severity="info">{t('dashboard.locationRequired')}</Alert>
+              ) : null}
+              {selectedLocation && isLoading && !forecast ? (
+                <LoadingState label={t('dashboard.loadingWeather')} />
+              ) : null}
+              {selectedLocation && error ? (
+                <Alert severity="error">{t('dashboard.weatherError')}</Alert>
+              ) : null}
+              {selectedLocation && forecast ? (
+                <Box
+                  sx={{
+                    display: 'grid',
+                    columnGap: { xs: 3, lg: 5 },
+                    rowGap: '28px',
+                    gridTemplateColumns: {
+                      xs: 'minmax(0, 1fr)',
+                      md: 'minmax(0, 607fr) minmax(0, 744fr)',
+                    },
+                    alignItems: 'stretch',
+                  }}
+                >
+                  <TodayWeatherCard weather={forecast} />
+                  <MonthlyTemperatureChart data={mockMonthlyTemperatures} />
+                  <Box sx={{ gridColumn: '1 / -1', minWidth: 0 }}>
+                    <DailyForecast
+                      days={forecast.daily}
+                      today={forecast.location.localTime.slice(0, 10)}
+                    />
+                  </Box>
+                </Box>
+              ) : null}
+            </Container>
+          </Box>
+          <DashboardFooter />
+        </Box>
       </Box>
     </Box>
   )

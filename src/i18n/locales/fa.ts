@@ -1,6 +1,8 @@
 import type { Translations } from '../i18n.types'
 
 export const fa: Translations = {
+  'dashboard.copyright': 'همهٔ حقوق این سایت برای شرکت مهندسی نادین صدر آریا محفوظ است.',
+  'dashboard.contact': 'تماس با ما:',
   'dashboard.forecastTitle': 'پیش‌بینی 2 هفته',
   'dashboard.today': 'امروز',
   'dashboard.noForecastDays': 'پیش‌بینی روزانه برای این موقعیت در دسترس نیست.',
