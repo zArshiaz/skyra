@@ -7,6 +7,7 @@ import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined'
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined'
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined'
 import {
+  Alert,
   Box,
   Button,
   ButtonGroup,
@@ -43,7 +44,7 @@ export function DashboardHeader({ onLocationChange, selectedLocation }: Dashboar
   const { mode, setMode } = useAppTheme()
   const navigate = useNavigate()
   const isSettingsOpen = Boolean(settingsAnchor)
-  const { isLoading: isSearchingLocations, locations } = useWeatherLocationSearch(locationQuery)
+  const { error: locationSearchError, isLoading: isSearchingLocations, locations } = useWeatherLocationSearch(locationQuery)
 
   useEffect(() => {
     popoverAction.current?.updatePosition()
@@ -125,7 +126,17 @@ export function DashboardHeader({ onLocationChange, selectedLocation }: Dashboar
           inputValue={locationInput}
           loading={isSearchingLocations}
           loadingText={t('dashboard.searchingLocations')}
-          noOptionsText={isSearchingLocations ? t('dashboard.searchingLocations') : t('dashboard.noLocationsFound')}
+          noOptionsText={
+            locationSearchError ? (
+              <Alert severity="error" sx={{ alignItems: 'center', fontSize: 12, py: 0.5 }}>
+                {t('dashboard.locationSearchError')}
+              </Alert>
+            ) : isSearchingLocations ? (
+              t('dashboard.searchingLocations')
+            ) : (
+              t('dashboard.noLocationsFound')
+            )
+          }
           onChange={handleLocationChange}
           onInputChange={handleLocationInputChange}
           options={locations}
@@ -141,6 +152,7 @@ export function DashboardHeader({ onLocationChange, selectedLocation }: Dashboar
           renderInput={(params) => (
             <TextField
               {...params}
+              error={Boolean(locationSearchError)}
               label={t('dashboard.location')}
               slotProps={{
 

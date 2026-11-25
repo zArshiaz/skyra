@@ -1,6 +1,8 @@
 export type Language = 'en' | 'fa'
 
 export type TranslationKey =
+  | 'dashboard.monthlyTemperature'
+  | 'dashboard.noMonthlyTemperature'
   | 'dashboard.backToLogin'
   | 'dashboard.description'
   | 'dashboard.setting'
@@ -15,6 +17,7 @@ export type TranslationKey =
   | 'dashboard.noLocationsFound'
   | 'dashboard.low'
   | 'dashboard.searchingLocations'
+  | 'dashboard.locationSearchError'
   | 'dashboard.title'
   | 'dashboard.loadingWeather'
   | 'dashboard.locationRequired'

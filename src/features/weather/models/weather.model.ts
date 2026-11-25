@@ -1,5 +1,7 @@
 export type WeatherLanguage = 'en' | 'fa'
 
+export type MonthlyTemperature = { month: number; averageCelsius: number }
+
 export type WeatherCondition = {
   code: number
   iconUrl: string

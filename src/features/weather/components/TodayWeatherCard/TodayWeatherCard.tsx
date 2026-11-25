@@ -26,23 +26,23 @@ export function TodayWeatherCard({ weather }: TodayWeatherCardProps) {
         borderRadius: '16px',
         boxShadow: '0px 4px 10px 0px #00000026',
         display: 'grid',
-        gridTemplateColumns: { xs: '1fr', sm: '203px 187px' },
-        justifyContent: 'space-between',
+        gridTemplateColumns: { xs: 'minmax(0, 1fr)', sm: 'fit-content(50%) minmax(0, 1fr)' },
         minHeight: 234,
         overflow: 'hidden',
         p: '20px 24px',
-        width: 'min(100%, 607px)',
+        width: '100%',
       }}
     >
       <Stack
         alignItems="flex-start"
         justifyContent="space-between"
         spacing={0}
-        sx={{ height: '100%', minHeight: 193 }}
+        sx={{ height: '100%', minHeight: 193, minWidth: 0 }}
       >
         <Chip
           icon={<LocationOnOutlinedIcon />}
           label={weather.location.name}
+          title={weather.location.name}
           sx={{
             '& .MuiChip-icon': { color: 'inherit' },
             px: 1,
@@ -51,6 +51,7 @@ export function TodayWeatherCard({ weather }: TodayWeatherCardProps) {
             borderRadius: '50px',
             color: colors.chipText,
             height: 40,
+            maxWidth: '100%',
           }}
         />
         <LocalizedWeatherDate date={weather.location.localTime} />
@@ -70,21 +71,28 @@ export function TodayWeatherCard({ weather }: TodayWeatherCardProps) {
         </Box>
       </Stack>
 
-      <Stack
-        alignItems="center"
-        justifyContent="center"
-        spacing={1}
-        sx={{ minWidth: 0, textAlign: 'center' }}
-      >
+      <Stack alignItems="end" justifyContent="center" spacing={1}>
         <Box
           alt={weather.current.condition.text}
           component="img"
           src={weather.current.condition.iconUrl}
-          sx={{ height: 129, maxWidth: '100%', objectFit: 'contain', width: 187 }}
+          sx={{
+            height: 129,
+            maxWidth: '100%',
+            objectFit: 'contain',
+            objectPosition:'right center',
+            width: 187,
+            transform: 'scale(1.4)',
+          }}
         />
         <Typography
-          noWrap
-          sx={{ color: colors.text, fontSize: 32, fontWeight: 400, lineHeight: 1.2 }}
+          sx={{
+            color: colors.text,
+            fontSize: 32,
+            fontWeight: 400,
+            lineHeight: 1.2,
+            maxWidth: '100%',
+          }}
         >
           {weather.current.condition.text}
         </Typography>

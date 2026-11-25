@@ -1,6 +1,8 @@
 import type { Translations } from '../i18n.types'
 
 export const en: Translations = {
+  'dashboard.monthlyTemperature': 'Average Monthly Temperature',
+  'dashboard.noMonthlyTemperature': 'Monthly temperature data is not available.',
   'dashboard.backToLogin': 'Back to login',
   'dashboard.description': 'The weather dashboard will be implemented next.',
   'dashboard.setting': 'Setting',
@@ -15,6 +17,7 @@ export const en: Translations = {
   'dashboard.noLocationsFound': 'No locations found',
   'dashboard.low': 'Low',
   'dashboard.searchingLocations': 'Searching locations…',
+  'dashboard.locationSearchError': 'Locations could not be loaded. Try again.',
   'dashboard.title': 'Weather Dashboard',
   'dashboard.loadingWeather': 'Loading weather…',
   'dashboard.locationRequired': 'Choose a location to see its weather.',

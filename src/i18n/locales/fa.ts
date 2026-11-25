@@ -1,6 +1,8 @@
 import type { Translations } from '../i18n.types'
 
 export const fa: Translations = {
+  'dashboard.monthlyTemperature': 'میانگین دمای ماهانه',
+  'dashboard.noMonthlyTemperature': 'داده‌ای برای میانگین دمای ماهانه موجود نیست.',
   'dashboard.backToLogin': 'بازگشت به ورود',
   'dashboard.description': 'داشبورد آب‌وهوا در مرحلهٔ بعد پیاده‌سازی می‌شود.',
   'dashboard.setting':'تنظیمات',
@@ -15,10 +17,11 @@ export const fa: Translations = {
   'dashboard.noLocationsFound': 'موقعیتی پیدا نشد',
   'dashboard.low': 'کمینه',
   'dashboard.searchingLocations': 'در حال جست‌وجوی موقعیت…',
+  'dashboard.locationSearchError': 'دریافت موقعیت‌ها ممکن نشد. دوباره تلاش کنید.',
   'dashboard.title': 'داشبورد آب‌وهوا',
   'dashboard.loadingWeather': 'در حال دریافت اطلاعات هوا…',
   'dashboard.locationRequired': 'برای مشاهدهٔ وضعیت هوا، یک موقعیت را انتخاب کنید.',
-  'dashboard.weatherError': 'دریافت اطلاعات هوا ممکن نشد.',
+  'dashboard.weatherError': 'خطا در دریافت اطلاعات آب و هوا.',
   'dashboard.welcome': 'خوش آمدی، {name}',
   'language.english': 'انگلیسی',
   'language.label': 'زبان',
