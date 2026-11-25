@@ -80,9 +80,8 @@ export function TodayWeatherCard({ weather }: TodayWeatherCardProps) {
             height: 129,
             maxWidth: '100%',
             objectFit: 'contain',
-            objectPosition:'right center',
             width: 187,
-            transform: 'scale(1.4)',
+            transform: 'scale(1.4) translateY(-5px)',
           }}
         />
         <Typography

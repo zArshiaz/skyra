@@ -33,12 +33,14 @@ export function MonthlyTemperatureChart({ data }: MonthlyTemperatureChartProps) 
         borderRadius: '16px',
         boxShadow: '0px 4px 10px 0px #00000026',
         color: colors.text,
+        display: 'flex',
+        flexDirection: 'column',
         minHeight: 234,
         minWidth: 0,
         p: 2,
       }}
     >
-      <Typography component="h2" sx={{ fontSize: 18, fontWeight: 700 }}>
+      <Typography component="h2" sx={{ fontSize: 18, fontWeight: 700,mb:1 }}>
         {title}
       </Typography>
       {temperatures.every((value) => value === null) ? (
@@ -46,11 +48,11 @@ export function MonthlyTemperatureChart({ data }: MonthlyTemperatureChartProps) 
           {t('dashboard.noMonthlyTemperature')}
         </Alert>
       ) : (
-        <Box dir="ltr" sx={{ width: '100%', minWidth: 0 }}>
+        <Box dir="ltr" sx={{ width: '100%', minWidth: 0, my: 'auto' }}>
           <LineChart
             height={180}
             title={title}
-            margin={{ top: 24, right: 24, bottom: 8, left: 4 }}
+            margin={{ top: 24, right: 24, bottom: 0, left: 4 }}
             grid={{ horizontal: true }}
             xAxis={[
               {
