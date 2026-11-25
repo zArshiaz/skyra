@@ -11,6 +11,7 @@ import {
   Box,
   Button,
   ButtonGroup,
+  Container,
   Divider,
   IconButton,
   Paper,
@@ -90,10 +91,10 @@ export function DashboardHeader({ onLocationChange, selectedLocation }: Dashboar
         minHeight: 56,
         zIndex: (theme) => theme.zIndex.appBar,
         flexShrink: 0,
-        px: 3,
         py: 1.5,
       }}
     >
+      <Container maxWidth="xl" sx={{ display: 'flex', alignItems: 'center' }}>
       <Box sx={{ alignItems: 'center', display: 'flex', gap: 1.25, minWidth: 0 }}>
         <Box
           alt=""
@@ -193,6 +194,7 @@ export function DashboardHeader({ onLocationChange, selectedLocation }: Dashboar
           </IconButton>
         </Tooltip>
       </Stack>
+      </Container>
 
       <Popover
         disableScrollLock
