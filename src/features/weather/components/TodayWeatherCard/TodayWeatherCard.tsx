@@ -30,10 +30,11 @@ export function TodayWeatherCard({ weather }: TodayWeatherCardProps) {
         borderRadius: '16px',
         boxShadow: '0px 4px 10px 0px #00000026',
         display: 'grid',
-        gridTemplateColumns: { xs: 'minmax(0, 1fr)', sm: 'fit-content(50%) minmax(0, 1fr)' },
-        minHeight: 234,
+        gridTemplateColumns: { xs: 'minmax(0, 6fr) minmax(0, 5fr)', sm: 'fit-content(50%) minmax(0, 1fr)' },
+        columnGap: { xs: 1.5, sm: 0 },
+        minHeight: { xs: 196, sm: 234 },
         overflow: 'hidden',
-        p: '20px 24px',
+        p: { xs: 2, sm: '20px 24px' },
         width: '100%',
       }}
     >
@@ -41,7 +42,7 @@ export function TodayWeatherCard({ weather }: TodayWeatherCardProps) {
         alignItems="flex-start"
         justifyContent="space-between"
         spacing={0}
-        sx={{ height: '100%', minHeight: 193, minWidth: 0 }}
+        sx={{ height: '100%', minHeight: { xs: 160, sm: 193 }, gap: { xs: 1.5, sm: 0 }, minWidth: 0 }}
       >
         <Chip
           icon={<LocationOnOutlinedIcon />}
@@ -50,19 +51,19 @@ export function TodayWeatherCard({ weather }: TodayWeatherCardProps) {
           sx={{
             '& .MuiChip-icon': { color: 'inherit' },
             px: 1,
-            fontSize: '1rem',
+            fontSize: { xs: 14, sm: 16 },
             bgcolor: colors.chip,
             borderRadius: '50px',
             color: colors.chipText,
-            height: 40,
+            height: { xs: 32, sm: 40 },
             maxWidth: '100%',
           }}
         />
         <LocalizedWeatherDate date={weather.location.localTime} />
-        <Box sx={{ minHeight: 63 }}>
+        <Box sx={{ minHeight: { xs: 'auto', sm: 63 } }}>
           <Typography
             component="p"
-            sx={{ color: colors.text, fontSize: 40, fontWeight: 500, lineHeight: 1 }}
+            sx={{ color: colors.text, fontSize: { xs: 32, sm: 40 }, fontWeight: 500, lineHeight: 1 }}
           >
             <bdi dir="ltr">
               {Math.round(weather.current.temperatureCelsius)}°{persian ? ' C' : 'C'}
@@ -82,28 +83,29 @@ export function TodayWeatherCard({ weather }: TodayWeatherCardProps) {
         alignItems={persian ? 'flex-start' : 'end'}
         justifyContent="center"
         spacing={1}
-        sx={
-          persian
-            ? { justifySelf: 'end', width: 'max-content', maxWidth: '100%', minWidth: 0 }
-            : undefined
-        }
+        sx={{
+          minWidth: 0,
+          maxWidth: '100%',
+          overflowWrap: 'anywhere',
+          ...(persian && { justifySelf: 'end', width: 'max-content' }),
+        }}
       >
         <Box
           alt={condition}
           component="img"
           src={weather.current.condition.iconUrl}
           sx={{
-            height: 129,
+            height: { xs: 76, sm: 129 },
             maxWidth: '100%',
             objectFit: 'contain',
-            width: 187,
-            transform: 'scale(1.4) translateY(-5px)',
+            width: { xs: 84, sm: 187 },
+            transform: { sm: 'scale(1.4) translateY(-5px)' },
           }}
         />
         <Typography
           sx={{
             color: colors.text,
-            fontSize: 32,
+            fontSize: { xs: 20, sm: 32 },
             fontWeight: 400,
             lineHeight: 1.2,
             maxWidth: '100%',
@@ -111,7 +113,7 @@ export function TodayWeatherCard({ weather }: TodayWeatherCardProps) {
         >
           {condition}
         </Typography>
-        <Typography sx={{ color: colors.text, fontSize: 16, lineHeight: '18px' }}>
+        <Typography sx={{ color: colors.text, fontSize: { xs: 14, sm: 16 }, lineHeight: '18px' }}>
           {t('dashboard.feelsLike').replace('{temperature}', String(feelsLike))}
         </Typography>
       </Stack>

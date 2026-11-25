@@ -63,8 +63,9 @@ export function DashboardFooter() {
           height: { xs: 'auto', lg: 106 },
           minHeight: 106,
           py: 2,
+          flexDirection: { xs: 'column', sm: 'row' },
           flexWrap: 'wrap',
-          alignItems: 'center',
+          alignItems: { xs: 'flex-start', sm: 'center' },
           justifyContent: 'space-between',
           gap: 2,
         }}
@@ -82,7 +83,7 @@ export function DashboardFooter() {
             {t('dashboard.copyright')}
           </Typography>
         </Stack>
-        <Stack direction="row" alignItems="center" flexWrap="wrap" columnGap={4} rowGap={1.5}>
+        <Stack direction={{ xs: 'column', sm: 'row' }} alignItems={{ xs: 'flex-start', sm: 'center' }} flexWrap="wrap" columnGap={4} rowGap={1.5}>
           <Link
             href={`mailto:${contactEmail}`}
             color="inherit"

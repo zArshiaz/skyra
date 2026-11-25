@@ -1,5 +1,5 @@
 import { useId } from 'react'
-import { Alert, Box, Paper, Typography } from '@mui/material'
+import { Alert, Box, Paper, Typography, useMediaQuery, type Theme } from '@mui/material'
 import { LineChart, lineClasses } from '@mui/x-charts/LineChart'
 
 import { useI18n } from '@/i18n/useI18n'
@@ -17,6 +17,7 @@ export function MonthlyTemperatureChart({ data }: MonthlyTemperatureChartProps) 
   const { direction, language, t } = useI18n()
   const { mode } = useAppTheme()
   const rtl = direction === 'rtl'
+  const compact = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'))
   const gradientId = useId()
   const colors = weatherCardColors[mode]
   const title = t('dashboard.monthlyTemperature')
@@ -50,7 +51,7 @@ export function MonthlyTemperatureChart({ data }: MonthlyTemperatureChartProps) 
         color: colors.text,
         display: 'flex',
         flexDirection: 'column',
-        minHeight: 234,
+        minHeight: { xs: 198, sm: 234 },
         minWidth: 0,
         p: 2,
       }}
@@ -65,15 +66,16 @@ export function MonthlyTemperatureChart({ data }: MonthlyTemperatureChartProps) 
       ) : (
         <Box dir="ltr" sx={{ width: '100%', minWidth: 0, my: 'auto' }}>
           <LineChart
-            height={180}
+            height={compact ? 152 : 180}
             title={title}
-            margin={{ top: 24, right: rtl ? 4 : 24, bottom: 0, left: rtl ? 24 : 4 }}
+            margin={{ top: compact ? 12 : 24, right: rtl ? 4 : 24, bottom: 0, left: rtl ? 24 : 4 }}
             grid={{ horizontal: true }}
             xAxis={[
               {
                 scaleType: 'point',
                 reverse: rtl,
                 data: months,
+                tickLabelInterval: compact ? (_month, index) => index % 2 === 0 : 'auto',
                 height: axisTickSpace + 28,
                 tickLabelStyle: { fontSize: 10, fontWeight: 500 },
                 disableLine: true,
@@ -84,7 +86,7 @@ export function MonthlyTemperatureChart({ data }: MonthlyTemperatureChartProps) 
               {
                 min,
                 max,
-                width: 56,
+                width: compact ? 44 : 56,
                 position: rtl ? 'right' : 'left',
                 tickLabelStyle: {
                   fontSize: 10,

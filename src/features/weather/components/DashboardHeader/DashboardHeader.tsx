@@ -91,10 +91,18 @@ export function DashboardHeader({ onLocationChange, selectedLocation }: Dashboar
         minHeight: 56,
         zIndex: (theme) => theme.zIndex.appBar,
         flexShrink: 0,
-        py: 1.5,
+        py: { xs: 1, sm: 1.5 },
       }}
     >
-      <Container maxWidth="xl" sx={{ display: 'flex', alignItems: 'center' }}>
+      <Container
+        maxWidth="xl"
+        sx={{
+          display: 'flex',
+          flexDirection: { xs: 'column', sm: 'row' },
+          alignItems: { xs: 'stretch', sm: 'center' },
+          gap: 1,
+        }}
+      >
       <Box sx={{ alignItems: 'center', display: 'flex', gap: 1.25, minWidth: 0 }}>
         <Box
           alt=""
@@ -105,9 +113,9 @@ export function DashboardHeader({ onLocationChange, selectedLocation }: Dashboar
             borderRadius: '50%',
             boxShadow: '0 1px 4px rgba(27, 54, 76, 0.16)',
             flex: '0 0 auto',
-            height: 56,
+            height: { xs: 32, sm: 56 },
             objectFit: 'cover',
-            width: 56,
+            width: { xs: 32, sm: 56 },
           }}
         />
         <Typography
@@ -123,7 +131,7 @@ export function DashboardHeader({ onLocationChange, selectedLocation }: Dashboar
         </Typography>
       </Box>
 
-      <Stack alignItems="center" direction="row" spacing={{ xs: 0.5, sm: 1.5 }} sx={{ marginInlineStart: 'auto' }}>
+      <Stack alignItems="center" direction="row" spacing={{ xs: 1, sm: 1.5 }} sx={{ marginInlineStart: { sm: 'auto' } }}>
         <Autocomplete
           filterOptions={(options) => options}
           size='small'
@@ -146,7 +154,9 @@ export function DashboardHeader({ onLocationChange, selectedLocation }: Dashboar
           onInputChange={handleLocationInputChange}
           options={locations}
           sx={{
-            width: { xs: 154, sm: 295},
+            minWidth: 0,
+            flex: { xs: 1, sm: 'initial' },
+            width: { sm: 295 },
             '& .MuiOutlinedInput-root': {
               height: 40,
               minHeight: 40,

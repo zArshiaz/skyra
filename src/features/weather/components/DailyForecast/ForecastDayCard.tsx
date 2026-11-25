@@ -24,10 +24,10 @@ export function ForecastDayCard({ day, label, temperature }: ForecastDayCardProp
       sx={{
         bgcolor: weatherCardColors[mode].forecastDay,
         borderRadius: '24px',
-        flex: '0 0 104px',
-        height: 266,
-        p: '22px 16px',
-        gap: '24px',
+        flex: { xs: '0 0 84px', sm: '0 0 104px' },
+        height: { xs: 156, sm: 266 },
+        p: { xs: '14px 8px', sm: '22px 16px' },
+        gap: { xs: 1.5, sm: 3 },
       }}
     >
       <Typography
@@ -40,7 +40,7 @@ export function ForecastDayCard({ day, label, temperature }: ForecastDayCardProp
           '&::after': {
             content: '""',
             display: 'block',
-            width: 60,
+            width: { xs: 48, sm: 60 },
             height: '2px',
             mt: 1,
             background: 'linear-gradient(90deg, transparent, currentColor, transparent)',
@@ -54,7 +54,7 @@ export function ForecastDayCard({ day, label, temperature }: ForecastDayCardProp
         component="img"
         src={day.condition.iconUrl}
         alt={conditionText(day.condition, language, true)}
-        sx={{ width: 72, height: 72, objectFit: 'contain' }}
+        sx={{ width: { xs: 52, sm: 72 }, height: { xs: 52, sm: 72 }, objectFit: 'contain' }}
       />
       <Typography dir="ltr" sx={{ fontSize: 18, fontWeight: 500 }}>
         {temperature}°C

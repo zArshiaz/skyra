@@ -43,7 +43,7 @@ export function DashboardPlaceholder() {
       />
       <Box sx={{ flex: 1, minHeight: 0, overflowY: 'auto', scrollbarGutter: 'stable' }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100%' }}>
-          <Box component="main" sx={{ flexGrow: 1, py: 3 }}>
+          <Box component="main" sx={{ flexGrow: 1, py: { xs: 2, sm: 3 } }}>
             <Container maxWidth="xl">
               {!selectedLocation ? (
                 <Alert severity="info">{t('dashboard.locationRequired')}</Alert>
@@ -59,7 +59,7 @@ export function DashboardPlaceholder() {
                   sx={{
                     display: 'grid',
                     columnGap: { xs: 3, lg: 5 },
-                    rowGap: '28px',
+                    rowGap: { xs: 2, sm: '28px' },
                     gridTemplateColumns: {
                       xs: 'minmax(0, 1fr)',
                       md: 'minmax(0, 607fr) minmax(0, 744fr)',

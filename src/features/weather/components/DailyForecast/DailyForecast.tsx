@@ -31,13 +31,13 @@ export function DailyForecast({ days, today }: DailyForecastProps) {
         borderRadius: '16px',
         boxShadow: '0px 4px 10px 0px #00000026',
         overflow: 'hidden',
-        pt: '24px',
-        pb: '26px',
+        pt: { xs: 2, sm: 3 },
+        pb: { xs: 1, sm: '26px' },
       }}
     >
       <Typography
         component="h2"
-        sx={{ mx: '28px', mb: '30px', fontSize: 24, fontWeight: 500, lineHeight: '29px' }}
+        sx={{ mx: { xs: 2, sm: '28px' }, mb: { xs: 2, sm: '30px' }, fontSize: { xs: 20, sm: 24 }, fontWeight: 500, lineHeight: '29px' }}
       >
         {title}
       </Typography>
@@ -48,12 +48,12 @@ export function DailyForecast({ days, today }: DailyForecastProps) {
           tabIndex={0}
           sx={{
             display: 'flex',
-            gap: '18px',
+            gap: { xs: 1.25, sm: '18px' },
             listStyle: 'none',
             m: 0,
             p: 0,
-            pb:1,
-            px: '28px',
+            pb: 1,
+            px: { xs: 2, sm: '28px' },
             overflowX: 'auto',
             scrollbarWidth: 'thin',
             '&:focus-visible': { outlineOffset: '-2px' },
@@ -69,7 +69,7 @@ export function DailyForecast({ days, today }: DailyForecastProps) {
           ))}
         </Box>
       ) : (
-        <Alert severity="info" sx={{ mx: '28px' }}>
+        <Alert severity="info" sx={{ mx: { xs: 2, sm: '28px' } }}>
           {t('dashboard.noForecastDays')}
         </Alert>
       )}
