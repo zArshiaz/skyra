@@ -41,7 +41,18 @@ export function DashboardPlaceholder() {
           {selectedLocation && isLoading && !forecast ? <LoadingState label={t('dashboard.loadingWeather')} /> : null}
           {selectedLocation && error ? <Alert severity="error">{t('dashboard.weatherError')}</Alert> : null}
           {selectedLocation && forecast ? (
-            <Box sx={{ display: 'grid', gap: 3, gridTemplateColumns: { xs: 'minmax(0, 1fr)', lg: 'minmax(0, 607fr) minmax(0, 744fr)' }, alignItems: 'stretch' }}>
+            <Box
+              sx={{
+                display: 'grid',
+                columnGap: { xs: 3, lg: 5 },
+                rowGap: '28px',
+                gridTemplateColumns: {
+                  xs: 'minmax(0, 1fr)',
+                  md: 'minmax(0, 607fr) minmax(0, 744fr)',
+                },
+                alignItems: 'stretch',
+              }}
+            >
               <TodayWeatherCard weather={forecast} />
               <MonthlyTemperatureChart data={mockMonthlyTemperatures} />
               <Box sx={{ gridColumn: '1 / -1', minWidth: 0 }}>

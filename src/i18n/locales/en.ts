@@ -10,7 +10,7 @@ export const en: Translations = {
   'dashboard.description': 'The weather dashboard will be implemented next.',
   'dashboard.setting': 'Setting',
   'dashboard.exit': 'Exit',
-  'dashboard.feelsLike': 'Feels like',
+  'dashboard.feelsLike': 'Feels like {temperature}°C',
   'dashboard.high': 'High',
   'dashboard.language': 'Language',
   'dashboard.lightMode': 'Light',

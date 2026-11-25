@@ -14,15 +14,30 @@ type MonthlyTemperatureChartProps = { data: MonthlyTemperature[] }
 const axisTickSpace = 12
 
 export function MonthlyTemperatureChart({ data }: MonthlyTemperatureChartProps) {
-  const { language, t } = useI18n()
+  const { direction, language, t } = useI18n()
   const { mode } = useAppTheme()
+  const rtl = direction === 'rtl'
   const gradientId = useId()
   const colors = weatherCardColors[mode]
   const title = t('dashboard.monthlyTemperature')
   const { temperatures, min, max } = prepareMonthlyTemperatures(data)
-  const months = language === 'fa'
-    ? ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند']
-    : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+  const months =
+    language === 'fa'
+      ? [
+          'فروردین',
+          'اردیبهشت',
+          'خرداد',
+          'تیر',
+          'مرداد',
+          'شهریور',
+          'مهر',
+          'آبان',
+          'آذر',
+          'دی',
+          'بهمن',
+          'اسفند',
+        ]
+      : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
   return (
     <Paper
@@ -40,7 +55,7 @@ export function MonthlyTemperatureChart({ data }: MonthlyTemperatureChartProps) 
         p: 2,
       }}
     >
-      <Typography component="h2" sx={{ fontSize: 18, fontWeight: 700,mb:1 }}>
+      <Typography component="h2" sx={{ fontSize: 18, fontWeight: 700, mb: 1 }}>
         {title}
       </Typography>
       {temperatures.every((value) => value === null) ? (
@@ -52,14 +67,15 @@ export function MonthlyTemperatureChart({ data }: MonthlyTemperatureChartProps) 
           <LineChart
             height={180}
             title={title}
-            margin={{ top: 24, right: 24, bottom: 0, left: 4 }}
+            margin={{ top: 24, right: rtl ? 4 : 24, bottom: 0, left: rtl ? 24 : 4 }}
             grid={{ horizontal: true }}
             xAxis={[
               {
                 scaleType: 'point',
+                reverse: rtl,
                 data: months,
                 height: axisTickSpace + 28,
-                tickLabelStyle: { fontSize: 10 ,fontWeight:500},
+                tickLabelStyle: { fontSize: 10, fontWeight: 500 },
                 disableLine: true,
                 tickSize: axisTickSpace,
               },
@@ -69,8 +85,13 @@ export function MonthlyTemperatureChart({ data }: MonthlyTemperatureChartProps) 
                 min,
                 max,
                 width: 56,
-                position: 'left',
-                tickLabelStyle: { fontSize: 10,fontWeight:500 ,direction: 'ltr', textAnchor: 'end' },
+                position: rtl ? 'right' : 'left',
+                tickLabelStyle: {
+                  fontSize: 10,
+                  fontWeight: 500,
+                  direction: 'ltr',
+                  textAnchor: rtl ? 'start' : 'end',
+                },
                 tickNumber: (max - min) / 10 + 1,
                 valueFormatter: (value: number) => `${value}°C`,
                 disableLine: true,

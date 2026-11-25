@@ -1,7 +1,7 @@
 import type { Translations } from '../i18n.types'
 
 export const fa: Translations = {
-  'dashboard.forecastTitle': 'پیش‌بینی دو هفته‌ای',
+  'dashboard.forecastTitle': 'پیش‌بینی 2 هفته',
   'dashboard.today': 'امروز',
   'dashboard.noForecastDays': 'پیش‌بینی روزانه برای این موقعیت در دسترس نیست.',
   'dashboard.monthlyTemperature': 'میانگین دمای ماهانه',
@@ -10,12 +10,12 @@ export const fa: Translations = {
   'dashboard.description': 'داشبورد آب‌وهوا در مرحلهٔ بعد پیاده‌سازی می‌شود.',
   'dashboard.setting':'تنظیمات',
   'dashboard.exit': 'خروج',
-  'dashboard.feelsLike': 'دمای محسوس',
+  'dashboard.feelsLike': '{temperature} درجه احساس می‌شود',
   'dashboard.high': 'بیشینه',
   'dashboard.language': 'زبان',
   'dashboard.lightMode': 'روشن',
   'dashboard.darkMode': 'تیره',
-  'dashboard.location': 'جست‌وجوی موقعیت شما',
+  'dashboard.location': 'مکان مورد نظر را جست‌وجو کنید',
   'dashboard.mode': 'حالت نمایش',
   'dashboard.noLocationsFound': 'موقعیتی پیدا نشد',
   'dashboard.low': 'کمینه',

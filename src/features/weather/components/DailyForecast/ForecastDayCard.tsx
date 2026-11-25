@@ -1,5 +1,7 @@
 import { Box, Stack, Typography } from '@mui/material'
 
+import { useI18n } from '@/i18n/useI18n'
+import { conditionText } from '../../i18n/conditionText'
 import { weatherCardColors } from '@/theme/tokens'
 import { useAppTheme } from '@/theme/useAppTheme'
 import type { DailyWeatherForecast } from '../../models/weather.model'
@@ -11,6 +13,7 @@ type ForecastDayCardProps = {
 }
 
 export function ForecastDayCard({ day, label, temperature }: ForecastDayCardProps) {
+  const { language } = useI18n()
   const { mode } = useAppTheme()
 
   return (
@@ -50,7 +53,7 @@ export function ForecastDayCard({ day, label, temperature }: ForecastDayCardProp
       <Box
         component="img"
         src={day.condition.iconUrl}
-        alt={day.condition.text}
+        alt={conditionText(day.condition, language, true)}
         sx={{ width: 72, height: 72, objectFit: 'contain' }}
       />
       <Typography dir="ltr" sx={{ fontSize: 18, fontWeight: 500 }}>

@@ -1,6 +1,7 @@
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined'
 import { Box, Chip, Paper, Stack, Typography } from '@mui/material'
 
+import { conditionText } from '../../i18n/conditionText'
 import { useI18n } from '@/i18n/useI18n'
 import { weatherCardColors } from '@/theme/tokens'
 import { useAppTheme } from '@/theme/useAppTheme'
@@ -12,9 +13,12 @@ type TodayWeatherCardProps = {
 }
 
 export function TodayWeatherCard({ weather }: TodayWeatherCardProps) {
-  const { t } = useI18n()
+  const { language, t } = useI18n()
   const { mode } = useAppTheme()
   const today = weather.daily[0]
+  const persian = language === 'fa'
+  const condition = conditionText(weather.current.condition, language, weather.current.isDay)
+  const feelsLike = Math.round(weather.current.feelsLikeCelsius)
   const colors = weatherCardColors[mode]
 
   return (
@@ -60,20 +64,32 @@ export function TodayWeatherCard({ weather }: TodayWeatherCardProps) {
             component="p"
             sx={{ color: colors.text, fontSize: 40, fontWeight: 500, lineHeight: 1 }}
           >
-            {Math.round(weather.current.temperatureCelsius)}°C
+            <bdi dir="ltr">
+              {Math.round(weather.current.temperatureCelsius)}°{persian ? ' C' : 'C'}
+            </bdi>
           </Typography>
           {today ? (
             <Typography color="text.secondary" sx={{ fontSize: 14, lineHeight: '18px', mt: 0.5 }}>
-              {t('dashboard.high')}: {Math.round(today.temperatureMaxCelsius)}° ·{' '}
-              {t('dashboard.low')}: {Math.round(today.temperatureMinCelsius)}°
+              {t('dashboard.high')}: <bdi dir="ltr">{Math.round(today.temperatureMaxCelsius)}°</bdi>{' '}
+              · {t('dashboard.low')}:{' '}
+              <bdi dir="ltr">{Math.round(today.temperatureMinCelsius)}°</bdi>
             </Typography>
           ) : null}
         </Box>
       </Stack>
 
-      <Stack alignItems="end" justifyContent="center" spacing={1}>
+      <Stack
+        alignItems={persian ? 'flex-start' : 'end'}
+        justifyContent="center"
+        spacing={1}
+        sx={
+          persian
+            ? { justifySelf: 'end', width: 'max-content', maxWidth: '100%', minWidth: 0 }
+            : undefined
+        }
+      >
         <Box
-          alt={weather.current.condition.text}
+          alt={condition}
           component="img"
           src={weather.current.condition.iconUrl}
           sx={{
@@ -93,10 +109,10 @@ export function TodayWeatherCard({ weather }: TodayWeatherCardProps) {
             maxWidth: '100%',
           }}
         >
-          {weather.current.condition.text}
+          {condition}
         </Typography>
         <Typography sx={{ color: colors.text, fontSize: 16, lineHeight: '18px' }}>
-          {t('dashboard.feelsLike')} {Math.round(weather.current.feelsLikeCelsius)}°C
+          {t('dashboard.feelsLike').replace('{temperature}', String(feelsLike))}
         </Typography>
       </Stack>
     </Paper>

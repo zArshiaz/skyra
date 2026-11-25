@@ -16,8 +16,8 @@ export function DailyForecast({ days, today }: DailyForecastProps) {
   const { mode } = useAppTheme()
   const colors = weatherCardColors[mode]
   const title = t('dashboard.forecastTitle')
-  const weekday = new Intl.DateTimeFormat(language, { weekday: 'short', timeZone: 'UTC' })
-  const temperature = new Intl.NumberFormat(language, { maximumFractionDigits: 0 })
+  const weekday = new Intl.DateTimeFormat(language, { weekday: language === 'fa' ? 'long' : 'short', timeZone: 'UTC' })
+  const temperature = new Intl.NumberFormat('en', { maximumFractionDigits: 0 })
 
   return (
     <Paper
@@ -27,7 +27,7 @@ export function DailyForecast({ days, today }: DailyForecastProps) {
       sx={{
         bgcolor: colors.surface,
         color: colors.text,
-        borderRadius: '24px',
+        borderRadius: '16px',
         boxShadow: '0px 4px 10px 0px #00000026',
         overflow: 'hidden',
         pt: '24px',
@@ -36,7 +36,7 @@ export function DailyForecast({ days, today }: DailyForecastProps) {
     >
       <Typography
         component="h2"
-        sx={{ mx: '28px', mb: '36px', fontSize: 24, fontWeight: 600, lineHeight: '29px' }}
+        sx={{ mx: '28px', mb: '30px', fontSize: 24, fontWeight: 500, lineHeight: '29px' }}
       >
         {title}
       </Typography>
@@ -51,6 +51,7 @@ export function DailyForecast({ days, today }: DailyForecastProps) {
             listStyle: 'none',
             m: 0,
             p: 0,
+            pb:1,
             px: '28px',
             overflowX: 'auto',
             scrollbarWidth: 'thin',

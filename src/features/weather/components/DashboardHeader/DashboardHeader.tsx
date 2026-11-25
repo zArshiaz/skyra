@@ -43,6 +43,7 @@ export function DashboardHeader({ onLocationChange, selectedLocation }: Dashboar
   const { direction, language, setLanguage, t } = useI18n()
   const { mode, setMode } = useAppTheme()
   const navigate = useNavigate()
+  const menuEdge = direction === 'rtl' ? 'left' : 'right'
   const isSettingsOpen = Boolean(settingsAnchor)
   const { error: locationSearchError, isLoading: isSearchingLocations, locations } = useWeatherLocationSearch(locationQuery)
 
@@ -81,6 +82,7 @@ export function DashboardHeader({ onLocationChange, selectedLocation }: Dashboar
       square
       sx={{
         alignItems: 'center',
+        bgcolor: language === 'fa' && mode === 'light' ? 'background.default' : 'background.paper',
         borderBottom: 1,
         borderColor: 'divider',
         boxShadow: '0 3px 8px rgba(24, 43, 64, 0.10)',
@@ -92,7 +94,7 @@ export function DashboardHeader({ onLocationChange, selectedLocation }: Dashboar
     >
       <Box sx={{ alignItems: 'center', display: 'flex', gap: 1.25, minWidth: 0 }}>
         <Box
-          alt="Weather"
+          alt=""
           component="img"
           src={logo}
           sx={{
@@ -108,7 +110,7 @@ export function DashboardHeader({ onLocationChange, selectedLocation }: Dashboar
         <Typography
           noWrap
           sx={{
-            color: 'primary.main',
+            color: language === 'fa' && mode === 'light' ? 'primary.dark' : 'primary.main',
             fontSize: 12,
             fontWeight: 400,
             lineHeight: '18px',
@@ -174,7 +176,7 @@ export function DashboardHeader({ onLocationChange, selectedLocation }: Dashboar
             aria-controls={isSettingsOpen ? 'dashboard-settings' : undefined}
             aria-expanded={isSettingsOpen}
             aria-haspopup="true"
-            aria-label="Settings"
+            aria-label={t('dashboard.setting')}
             onClick={openSettings}
             sx={{
               border: 1,
@@ -192,7 +194,7 @@ export function DashboardHeader({ onLocationChange, selectedLocation }: Dashboar
 
       <Popover
         anchorEl={settingsAnchor}
-        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+        anchorOrigin={{ horizontal: menuEdge, vertical: 'bottom' }}
         action={popoverAction}
         id="dashboard-settings"
         key={direction}
@@ -203,7 +205,7 @@ export function DashboardHeader({ onLocationChange, selectedLocation }: Dashboar
             sx: { boxSizing: 'border-box', height: 'auto', mt: 1, px: 2,pb:1,pt:1.2, width: 220 },
           },
         }}
-        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+        transformOrigin={{ horizontal: menuEdge, vertical: 'top' }}
       >
         <Stack spacing={0}>
           <Box>
