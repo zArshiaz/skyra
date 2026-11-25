@@ -1,6 +1,9 @@
 import type { Translations } from '../i18n.types'
 
 export const fa: Translations = {
+  'dashboard.forecastTitle': 'پیش‌بینی دو هفته‌ای',
+  'dashboard.today': 'امروز',
+  'dashboard.noForecastDays': 'پیش‌بینی روزانه برای این موقعیت در دسترس نیست.',
   'dashboard.monthlyTemperature': 'میانگین دمای ماهانه',
   'dashboard.noMonthlyTemperature': 'داده‌ای برای میانگین دمای ماهانه موجود نیست.',
   'dashboard.backToLogin': 'بازگشت به ورود',

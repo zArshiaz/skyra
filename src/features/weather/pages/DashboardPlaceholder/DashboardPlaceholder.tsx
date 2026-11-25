@@ -5,6 +5,7 @@ import { Alert, Box, Container } from '@mui/material'
 import { useI18n } from '@/i18n/useI18n'
 import { LoadingState } from '@/shared/components/LoadingState/LoadingState'
 import { DashboardHeader } from '../../components/DashboardHeader/DashboardHeader'
+import { DailyForecast } from '../../components/DailyForecast/DailyForecast'
 import { MonthlyTemperatureChart } from '../../components/MonthlyTemperatureChart/MonthlyTemperatureChart'
 import { TodayWeatherCard } from '../../components/TodayWeatherCard/TodayWeatherCard'
 import { mockMonthlyTemperatures } from '../../data/monthlyTemperature.mock'
@@ -43,6 +44,9 @@ export function DashboardPlaceholder() {
             <Box sx={{ display: 'grid', gap: 3, gridTemplateColumns: { xs: 'minmax(0, 1fr)', lg: 'minmax(0, 607fr) minmax(0, 744fr)' }, alignItems: 'stretch' }}>
               <TodayWeatherCard weather={forecast} />
               <MonthlyTemperatureChart data={mockMonthlyTemperatures} />
+              <Box sx={{ gridColumn: '1 / -1', minWidth: 0 }}>
+                <DailyForecast days={forecast.daily} today={forecast.location.localTime.slice(0, 10)} />
+              </Box>
             </Box>
           ) : null}
         </Container>

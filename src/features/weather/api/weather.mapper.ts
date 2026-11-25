@@ -25,6 +25,7 @@ export const toWeatherForecast = (dto: WeatherForecastDto): WeatherForecast => (
   },
   daily: dto.forecast.forecastday.map((forecast) => ({
     averageHumidity: forecast.day.avghumidity,
+    averageTemperatureCelsius: forecast.day.avgtemp_c,
     condition: toCondition(forecast.day.condition),
     date: forecast.date,
     precipitationProbability: forecast.day.daily_chance_of_rain,

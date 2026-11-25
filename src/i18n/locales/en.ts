@@ -1,6 +1,9 @@
 import type { Translations } from '../i18n.types'
 
 export const en: Translations = {
+  'dashboard.forecastTitle': '2 weeks Forecast',
+  'dashboard.today': 'Today',
+  'dashboard.noForecastDays': 'Daily forecast data is not available.',
   'dashboard.monthlyTemperature': 'Average Monthly Temperature',
   'dashboard.noMonthlyTemperature': 'Monthly temperature data is not available.',
   'dashboard.backToLogin': 'Back to login',

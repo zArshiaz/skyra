@@ -1,6 +1,9 @@
 export type Language = 'en' | 'fa'
 
 export type TranslationKey =
+  | 'dashboard.forecastTitle'
+  | 'dashboard.today'
+  | 'dashboard.noForecastDays'
   | 'dashboard.monthlyTemperature'
   | 'dashboard.noMonthlyTemperature'
   | 'dashboard.backToLogin'

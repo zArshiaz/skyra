@@ -24,6 +24,7 @@ export type WeatherCurrentDto = {
 
 export type WeatherForecastDayDto = {
   avghumidity: number
+  avgtemp_c: number
   condition: WeatherConditionDto
   daily_chance_of_rain: number
   maxtemp_c: number

@@ -30,6 +30,7 @@ export type CurrentWeather = {
 
 export type DailyWeatherForecast = {
   averageHumidity: number
+  averageTemperatureCelsius: number
   condition: WeatherCondition
   date: string
   precipitationProbability: number
